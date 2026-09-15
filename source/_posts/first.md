@@ -2,7 +2,7 @@
 title: 折腾了两天，博客终于跑起来了
 date: 2025-12-03 00:15:00
 tags: [Hexo, 建站]
-categories: 折腾记录
+categories: 个人记录
 ---
 
 今天历尽千辛万苦终于把博客搞好了。
