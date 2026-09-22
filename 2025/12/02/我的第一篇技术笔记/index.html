@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8fbfd">
 <title>我的第一篇技术笔记 | zzxtx 的博客</title>
-<meta name="description" content="一个计算机专业学生的技术博客：学习笔记、项目实践与踩坑记录">
 <meta name="description" content="今天解决了什么问题？描述了在安装Hexo时遇到的PowerShell执行策略问题。 解决方案是什么？使用了 powershell -ExecutionPolicy Bypass -Command 这个命令来临时绕过限制… 学到了什么？明白了Windows系统的脚本执行安全策略…">
 <meta property="og:type" content="article">
 <meta property="og:title" content="我的第一篇技术笔记">
@@ -18,58 +18,65 @@
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="PowerShell">
 <meta name="twitter:card" content="summary">
-<link rel="icon" href="data:,">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23185fa5%22/><path d=%22M18 22l-8 10 8 10M46 22l8 10-8 10M37 16L27 48%22 fill=%22none%22 stroke=%22white%22 stroke-width=%225%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
 <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/custom.css">
 <script>(function(){var t=null;try{t=localStorage.getItem('theme')}catch(e){}if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)})();</script>
 <!-- hexo injector head_end start --><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
-<body>
+<body class="post-page">
 <div class="reading-progress" id="reading-progress"></div>
-
 <header class="site-nav">
   <div class="nav-inner">
-    <a class="logo" href="/">&lt;zzxtx /&gt;</a>
-    <nav class="nav-links">
+    <a class="logo" href="/" aria-label="返回首页"><span class="logo-mark"></span>zzxtx<span class="logo-path"> / lab</span></a>
+    <button class="nav-toggle icon-btn" id="nav-toggle" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="nav-links">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav-links" id="nav-links" aria-label="主导航">
       
       
-      <a href="/">首页</a>
+      <a href="/" data-nav-root="1">首页</a>
+      
+      
+      <a href="/#projects" data-nav-hash="projects">项目</a>
+      
+      
+      <a href="/#logs" data-nav-hash="logs">日志</a>
       
       
       <a href="/archives">归档</a>
       
       
-      <a href="/categories">分类</a>
-      
-      
-      <a href="/tags">标签</a>
-      
-      
       <a href="/about">关于</a>
       
     </nav>
-    <button class="theme-toggle" id="theme-toggle" aria-label="切换亮暗模式" title="切换亮暗模式">
-      <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-      <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    
+    <button class="search-open nav-action" id="search-open" type="button" aria-label="搜索文章" title="搜索文章">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <span>搜索</span><kbd>/</kbd>
+    </button>
+    
+    <button class="theme-toggle icon-btn" id="theme-toggle" type="button" aria-label="切换亮暗模式" title="切换亮暗模式">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
     </button>
   </div>
 </header>
-
 <main class="site-main">
+
 
 
 <article class="post">
   <header class="post-header">
+    <p class="post-kicker"><a href="/#logs">实验日志</a><span>/</span>个人记录</p>
     <h1 class="post-title">我的第一篇技术笔记</h1>
-    <div class="post-meta">
-      <time datetime="2025-12-02">2025-12-02</time>
-      
-      <span class="dot">·</span>
-      <a href="/categories/%E4%B8%AA%E4%BA%BA%E8%AE%B0%E5%BD%95/">个人记录</a>
-      
-      <span class="dot">·</span>
-      <span>约 1 分钟</span>
+    
+    <div class="note-meta-grid">
+      <div><span>发布</span><strong><time datetime="2025-12-02">2025.12.02</time></strong></div>
+      <div><span>更新</span><strong><time datetime="2026-09-15">2026.09.15</time></strong></div>
+      <div><span>阅读</span><strong>约 1 分钟</strong></div>
+      <div><span>状态</span><strong class="note-status"><i></i>已记录</strong></div>
     </div>
   </header>
-
   <div class="post-layout">
     <div class="article-entry" id="article-entry">
       <h2 id="今天解决了什么问题？"><a href="#今天解决了什么问题？" class="headerlink" title="今天解决了什么问题？"></a>今天解决了什么问题？</h2><p>描述了在安装Hexo时遇到的PowerShell执行策略问题。</p>
@@ -77,47 +84,56 @@
 <h2 id="学到了什么？"><a href="#学到了什么？" class="headerlink" title="学到了什么？"></a>学到了什么？</h2><p>明白了Windows系统的脚本执行安全策略…</p>
 
       
-      <div class="post-tags">
-        
-        <a class="chip" href="/tags/Hexo/"># Hexo</a>
-        
-        <a class="chip" href="/tags/PowerShell/"># PowerShell</a>
-        
-      </div>
+      <footer class="post-tags">
+        <span>相关主题</span>
+        <div><a class="chip" href="/tags/Hexo/"># Hexo</a><a class="chip" href="/tags/PowerShell/"># PowerShell</a></div>
+      </footer>
       
     </div>
     
     <aside class="post-toc" id="post-toc">
-      <p class="toc-title">目录</p>
+      <p class="toc-title">ON THIS PAGE</p>
       <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8A%E5%A4%A9%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">今天解决了什么问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">解决方案是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E5%88%B0%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">学到了什么？</span></a></li></ol>
     </aside>
     
   </div>
-
-  <nav class="post-nav">
-    
+  <nav class="post-nav" aria-label="相邻文章">
     <a class="post-nav-item" href="/2025/12/03/first/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">折腾了两天，博客终于跑起来了</span></a>
-    
-    <span class="post-nav-item"></span>
+    <span></span>
   </nav>
 </article>
 
 </main>
-
 <footer class="site-footer">
-  <p>© 2025 - 2026 zzxtx</p>
-  <p class="footer-links">
-    
-    <a href="https://github.com/zzxtx" target="_blank" rel="noopener">GitHub</a>
-    
-    <span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动</span>
-  </p>
+  <div class="footer-inner">
+    <div>
+      <strong>zzxtx / lab</strong>
+      <span>Built while learning.</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/zzxtx" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+      <span>© 2025–2026</span>
+    </div>
+  </div>
 </footer>
-
-<button class="back-top" id="back-top" aria-label="返回顶部" title="返回顶部">
+<button class="back-top icon-btn" id="back-top" type="button" aria-label="返回顶部" title="返回顶部">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 
+<dialog class="search-dialog" id="search-dialog" aria-labelledby="search-title" data-max-results="8" data-shortcut="/">
+  <div class="search-head">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+    <label class="sr-only" id="search-title" for="search-input">搜索文章</label>
+    <input id="search-input" type="search" autocomplete="off" placeholder="搜索标题、内容或标签…">
+    <button class="search-close" id="search-close" type="button">Esc</button>
+  </div>
+  <div class="search-results" id="search-results"><p class="search-empty">输入关键词开始搜索</p></div>
+</dialog>
+
+<script id="search-data" type="application/json">[{"title":"折腾了两天，博客终于跑起来了","url":"/2025/12/03/first/","date":"2025-12-03","tags":["Hexo","建站"],"text":"今天历尽千辛万苦终于把博客搞好了。 虽然还有好多没搞懂： 怎么实现自动化，或者说图形化，就像用 App 一样，而不是全是命令行 主题在 GitHub 上看全是文件，一点都不美观 Markdown 还不会写 怎么像 CSdiy 一样把内容很好地呈现出来 GitHub 和 Git 还不能熟练使用"},{"title":"我的第一篇技术笔记","url":"/2025/12/02/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/","date":"2025-12-02","tags":["Hexo","PowerShell"],"text":"今天解决了什么问题？描述了在安装Hexo时遇到的PowerShell执行策略问题。 解决方案是什么？使用了 powershell -ExecutionPolicy Bypass -Command 这个命令来临时绕过限制… 学到了什么？明白了Windows系统的脚本执行安全策略…"},{"title":"Restart","url":"/2026/09/15/Restart/","date":"2026-09-15","tags":["个人记录"],"text":"今天重新开始写博客，终于开始深入了解博客，不仅是我的知识库，还是我的成长记录还有好多好多要学的，一定要把这套系统吃透"},{"title":"第一个skill","url":"/2026/09/21/%E7%AC%AC%E4%B8%80%E4%B8%AAskill/","date":"2026-09-21","tags":["个人记录"],"text":"今天第一个skill上传github了（测了三天，一点点改），用于手机自动化，无线adb来操控，实现自动签到，看广告。不得不说，现在这些广告一点都不单纯，什么滑动浏览，跳转都是小case，昨天居然直接弹了个淘宝对话界面，agent差点就傻了，还好绕了一会还是摸索出来了，还总结了规律，确实聪明哈，只要定好目标，它就可以朝目标方向努力，可以可以。今天还发布了股票筛选脚本，等有空好好拆解一下，学习一下"},{"title":"连接安卓！","url":"/2026/09/19/%E8%BF%9E%E6%8E%A5%E5%AE%89%E5%8D%93%EF%BC%81/","date":"2026-09-19","tags":["个人记录"],"text":"今天成功把codex接上手机了，还可以无线调试，实现一些目前的想法（自动看广告，签到）（以后开着电脑就可以后台把这些做着）但是这个过程还是蛮折腾的，1.先是想在手机上直接包含Agent+api（closepaw），结果确实成功了，但是太蠢了2.再想着接电脑的agent（codex，workbuddy），效果确实好多了（只是这个过程又折腾了一下，先是想着自己去安MCP，结果不如直接交给Agent，非常厉害）3.之后的计划；稳定性测试，优化（skill的完善），加新功能最后，ai领域太多要学的了，慢慢来，（今天不就学了之前一直没明白的mcp吗）"}]</script>
+
 <script src="/js/main.js"></script>
+<script src="/js/custom.js"></script>
 <!-- hexo injector body_end start --><script src="/js/custom.js" defer></script><!-- hexo injector body_end end --></body>
 </html>
