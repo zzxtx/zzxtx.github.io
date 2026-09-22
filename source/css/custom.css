@@ -1,0 +1,47 @@
+/* =========================================================
+   全站自定义样式（custom.css）
+   这里的规则会叠加在主题样式之上，优先级更高。
+   改完保存 → 终端跑 hexo clean && hexo server → 刷新预览
+   ========================================================= */
+
+/* ---------- 1. 正文阅读体验 ---------- */
+.article-entry {
+  font-size: 16px;        /* 正文字号（默认约 14px） */
+  line-height: 1.85;      /* 行高，中文阅读舒适值 */
+  letter-spacing: 0.3px;  /* 字间距 */
+}
+
+/* ---------- 2. 文章标题 ---------- */
+.article-title,
+.article-title a {
+  font-weight: 600;
+  color: #6cc1e3;         /* 标题颜色，改成你喜欢的 */
+}
+.article-title a:hover {
+  color: #159a8c;
+}
+
+/* ---------- 3. 正文里的链接 ---------- */
+.article-entry a {
+  color: #1a5f7a;
+  border-bottom-color: #1a5f7a;
+}
+
+/* ---------- 4. 代码块 ---------- */
+.article-entry code {
+  font-size: 0.88em;
+}
+.article-entry .highlight {
+  border-radius: 6px;
+  border: 1px solid #e3e8ec;
+}
+
+/* ---------- 5. 首页文章卡片间距 ---------- */
+#content .article {
+  padding-bottom: 28px;
+  margin-bottom: 36px;
+}
+
+/* ---------- 6. 页面整体宽度 ----------
+   landscape 默认约 960px，想加宽就取消注释改数值 */
+/* #wrap, #wrap .inner { max-width: 1080px; } */
