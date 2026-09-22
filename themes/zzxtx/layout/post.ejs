@@ -1,0 +1,44 @@
+<% var plain = strip_html(page.content).replace(/\s+/g, ''); var readMin = Math.max(1, Math.round(plain.length / 400)); %>
+<% var tocHtml = (theme.toc && theme.toc.enable !== false && page.toc !== false) ? toc(page.content, { class: 'toc', list_number: false, max_depth: (theme.toc && theme.toc.max_depth) || 3 }) : ''; %>
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><%= page.title %></h1>
+    <div class="post-meta">
+      <time datetime="<%= date(page.date, 'YYYY-MM-DD') %>"><%= date(page.date, 'YYYY-MM-DD') %></time>
+      <% if (page.categories && page.categories.length) { %>
+      <span class="dot">·</span>
+      <% page.categories.each(function(cat){ %><a href="<%- url_for(cat.path) %>"><%= cat.name %></a><% }); %>
+      <% } %>
+      <span class="dot">·</span>
+      <span>约 <%= readMin %> 分钟</span>
+    </div>
+  </header>
+
+  <div class="post-layout">
+    <div class="article-entry" id="article-entry">
+      <%- page.content %>
+      <% if (page.tags && page.tags.length) { %>
+      <div class="post-tags">
+        <% page.tags.each(function(tag){ %>
+        <a class="chip" href="<%- url_for(tag.path) %>"># <%= tag.name %></a>
+        <% }); %>
+      </div>
+      <% } %>
+    </div>
+    <% if (tocHtml && tocHtml.replace(/<[^>]+>/g, '').trim().length > 0) { %>
+    <aside class="post-toc" id="post-toc">
+      <p class="toc-title">目录</p>
+      <%- tocHtml %>
+    </aside>
+    <% } %>
+  </div>
+
+  <nav class="post-nav">
+    <% if (page.prev) { %>
+    <a class="post-nav-item" href="<%- url_for(page.prev.path) %>"><span class="post-nav-label">上一篇</span><span class="post-nav-title"><%= page.prev.title %></span></a>
+    <% } else { %><span class="post-nav-item"></span><% } %>
+    <% if (page.next) { %>
+    <a class="post-nav-item next" href="<%- url_for(page.next.path) %>"><span class="post-nav-label">下一篇</span><span class="post-nav-title"><%= page.next.title %></span></a>
+    <% } else { %><span class="post-nav-item"></span><% } %>
+  </nav>
+</article>

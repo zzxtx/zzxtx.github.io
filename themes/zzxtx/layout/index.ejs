@@ -1,0 +1,41 @@
+<% if (page.current === 1) { %>
+<section class="hero">
+  <h1 class="hero-title"><%= (theme.hero && theme.hero.greeting) || "Hi, I'm" %> <span class="accent"><%= (theme.hero && theme.hero.name) || config.author %></span></h1>
+  <% if (theme.hero && theme.hero.bio) { %><p class="hero-bio"><%= theme.hero.bio %></p><% } %>
+  <% if (theme.hero && theme.hero.stack) { %><p class="hero-stack"><%= theme.hero.stack %></p><% } %>
+  <div class="hero-btns">
+    <a class="btn btn-solid" href="<%- url_for((theme.hero && theme.hero.main_btn_link) || '#recent') %>"><%= (theme.hero && theme.hero.main_btn) || '查看文章' %></a>
+    <% if (theme.hero && theme.hero.github_link) { %>
+    <a class="btn" href="<%= theme.hero.github_link %>" target="_blank" rel="noopener"><%= theme.hero.github_btn || 'GitHub' %> ↗</a>
+    <% } %>
+  </div>
+  <p class="hero-stats">已坚持记录 <span class="accent"><%= site.posts.length %></span> 篇</p>
+</section>
+<% } %>
+
+<section class="wrap" id="recent">
+  <h2 class="sec-title">最近文章</h2>
+  <% if (page.posts.length) { %>
+  <% page.posts.each(function(post){ %>
+  <article class="card">
+    <h3 class="card-title"><a href="<%- url_for(post.path) %>"><%= post.title %></a></h3>
+    <%
+      var exc = strip_html(post.excerpt || post.content).replace(/^[\s\r\n]+/, '').substring(0, 120);
+    %>
+    <p class="card-excerpt"><%= exc %><% if (exc.length >= 120) { %>…<% } %></p>
+    <div class="card-meta">
+      <span class="card-tags">
+        <% if (post.tags && post.tags.length) { post.tags.each(function(tag){ %>
+        <a class="chip" href="<%- url_for(tag.path) %>"><%= tag.name %></a>
+        <% }); } %>
+      </span>
+      <a class="card-more" href="<%- url_for(post.path) %>">阅读全文 →</a>
+      <time class="card-date"><%= date(post.date, 'YYYY-MM-DD') %></time>
+    </div>
+  </article>
+  <% }); %>
+  <%- paginator({ prev_text: '上一页', next_text: '下一页', mid_size: 1 }) %>
+  <% } else { %>
+  <p class="empty">还没有文章，去写第一篇吧。</p>
+  <% } %>
+</section>

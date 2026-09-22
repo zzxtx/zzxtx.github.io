@@ -1,0 +1,32 @@
+# zzxtx 主题配置
+
+menu:
+  首页: /
+  归档: /archives
+  分类: /categories
+  标签: /tags
+  关于: /about
+
+# 首页 Hero 大屏
+hero:
+  greeting: "Hi, I'm"
+  name: zzxtx
+  bio: 一个正在学习编程的大学生 · 记录学习笔记、项目实践与踩坑
+  stack: Data Science · AI · Coding
+  main_btn: 查看文章
+  main_btn_link: "#recent"
+  github_btn: GitHub
+  github_link: https://github.com/zzxtx
+
+# 页脚社交链接
+social:
+  GitHub: https://github.com/zzxtx
+
+footer:
+  since: 2025
+  powered: true
+
+# 文章页目录
+toc:
+  enable: true
+  max_depth: 3
