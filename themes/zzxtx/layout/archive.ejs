@@ -1,42 +1,43 @@
-<div class="wrap">
+<div class="archive-page home-shell">
   <% var isTagsIndex = !page.tag && !page.category && !is_archive() && page.path.indexOf('tags') === 0; %>
   <% var isCatsIndex = !page.tag && !page.category && !is_archive() && page.path.indexOf('categories') === 0; %>
+  <header class="archive-header">
+    <p class="eyebrow"><%= page.tag ? 'TAG' : (page.category ? 'CATEGORY' : 'ARCHIVE') %></p>
+    <% if (page.tag) { %><h1>标签：<%= page.tag %></h1><p>围绕这个关键词写下的全部记录。</p>
+    <% } else if (page.category) { %><h1>分类：<%= page.category %></h1><p>这个分类下的实验、笔记与随记。</p>
+    <% } else if (isTagsIndex) { %><h1>标签</h1><p>按关键词浏览全部记录。</p>
+    <% } else if (isCatsIndex) { %><h1>分类</h1><p>按内容方向浏览全部记录。</p>
+    <% } else { %><h1>归档</h1><p><%= site.posts.length %> 篇记录，按时间、分类和标签整理。</p><% } %>
+  </header>
 
-  <% if (page.tag) { %>
-  <h1 class="page-title">标签：<%= page.tag %></h1>
-  <% } else if (page.category) { %>
-  <h1 class="page-title">分类：<%= page.category %></h1>
-  <% } else if (isTagsIndex) { %>
-  <h1 class="page-title">标签</h1>
-  <% } else if (isCatsIndex) { %>
-  <h1 class="page-title">分类</h1>
-  <% } else { %>
-  <h1 class="page-title">归档</h1>
+  <% if (!page.tag && !page.category && is_archive()) { %>
+  <div class="archive-taxonomy">
+    <div><span>分类</span><div class="cloud"><% site.categories.each(function(item) { %><a class="chip chip-lg" href="<%- url_for(item.path) %>"><%= item.name %><em><%= item.posts.length %></em></a><% }); %></div></div>
+    <div><span>标签</span><div class="cloud"><% site.tags.each(function(item) { %><a class="chip chip-lg" href="<%- url_for(item.path) %>"><%= item.name %><em><%= item.posts.length %></em></a><% }); %></div></div>
+  </div>
   <% } %>
 
   <% if (isTagsIndex || isCatsIndex) { %>
   <% var items = isTagsIndex ? site.tags : site.categories; %>
-  <div class="cloud">
-    <% items.each(function(item){ %>
-    <a class="chip chip-lg" href="<%- url_for(item.path) %>"><%= item.name %><span class="chip-count"><%= item.posts.length %></span></a>
-    <% }); %>
-  </div>
+  <div class="cloud cloud-page"><% items.each(function(item) { %><a class="chip chip-lg" href="<%- url_for(item.path) %>"><%= item.name %><em><%= item.posts.length %></em></a><% }); %></div>
   <% } else { %>
-  <% var lastYear = null; %>
-  <% page.posts.each(function(post){ %>
-  <% var y = date(post.date, 'YYYY'); %>
-  <% if (y !== lastYear) { %>
-  <% if (lastYear !== null) { %></ul><% } %>
-  <% lastYear = y; %>
-  <h2 class="arc-year"><%= y %></h2>
-  <ul class="arc-list">
-    <% } %>
-    <li class="arc-item">
-      <span class="arc-date"><%= date(post.date, 'MM-DD') %></span>
-      <a href="<%- url_for(post.path) %>"><%= post.title %></a>
-    </li>
-  <% }); %>
-  <% if (lastYear !== null) { %></ul><% } %>
+  <div class="archive-years">
+    <% var lastYear = null; %>
+    <% page.posts.each(function(post) { %>
+      <% var y = date(post.date, 'YYYY'); %>
+      <% if (y !== lastYear) { %>
+        <% if (lastYear !== null) { %></div></section><% } %>
+        <% lastYear = y; %>
+        <section class="archive-year"><h2><%= y %></h2><div class="archive-list">
+      <% } %>
+      <article class="archive-item">
+        <time><%= date(post.date, 'MM.DD') %></time>
+        <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+        <% if (post.tags && post.tags.length) { %><span><%= post.tags.toArray()[0].name %></span><% } %>
+      </article>
+    <% }); %>
+    <% if (lastYear !== null) { %></div></section><% } %>
+  </div>
   <%- paginator({ prev_text: '上一页', next_text: '下一页', mid_size: 1 }) %>
   <% } %>
 </div>

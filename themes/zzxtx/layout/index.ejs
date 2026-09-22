@@ -1,41 +1,114 @@
-<% if (page.current === 1) { %>
-<section class="hero">
-  <h1 class="hero-title"><%= (theme.hero && theme.hero.greeting) || "Hi, I'm" %> <span class="accent"><%= (theme.hero && theme.hero.name) || config.author %></span></h1>
-  <% if (theme.hero && theme.hero.bio) { %><p class="hero-bio"><%= theme.hero.bio %></p><% } %>
-  <% if (theme.hero && theme.hero.stack) { %><p class="hero-stack"><%= theme.hero.stack %></p><% } %>
-  <div class="hero-btns">
-    <a class="btn btn-solid" href="<%- url_for((theme.hero && theme.hero.main_btn_link) || '#recent') %>"><%= (theme.hero && theme.hero.main_btn) || '查看文章' %></a>
-    <% if (theme.hero && theme.hero.github_link) { %>
-    <a class="btn" href="<%= theme.hero.github_link %>" target="_blank" rel="noopener"><%= theme.hero.github_btn || 'GitHub' %> ↗</a>
-    <% } %>
+<% var firstPage = !page.current || page.current === 1; %>
+<% if (firstPage) { %>
+<section class="hero home-shell">
+  <div class="hero-copy">
+    <p class="eyebrow"><%= (theme.hero && theme.hero.eyebrow) || 'PERSONAL LAB' %></p>
+    <h1 class="hero-title"><%= (theme.hero && theme.hero.title_line_1) || '边学边做，' %><br><span><%= (theme.hero && theme.hero.title_line_2) || '把折腾变成作品。' %></span></h1>
+    <p class="hero-bio"><%= (theme.hero && theme.hero.bio) || config.description %></p>
+    <div class="hero-actions">
+      <a class="btn btn-solid" href="<%- url_for((theme.hero && theme.hero.main_btn_link) || '#logs') %>"><%= (theme.hero && theme.hero.main_btn) || '查看实验' %><span aria-hidden="true">→</span></a>
+      <% if (theme.hero && theme.hero.github_link) { %><a class="btn" href="<%= theme.hero.github_link %>" target="_blank" rel="noopener"><%= theme.hero.github_btn || 'GitHub' %><span aria-hidden="true">↗</span></a><% } %>
+    </div>
+    <p class="hero-footnote"><span class="pulse-dot"></span><%= site.posts.length %> 篇公开记录，仍在持续更新</p>
   </div>
-  <p class="hero-stats">已坚持记录 <span class="accent"><%= site.posts.length %></span> 篇</p>
+  <% var exp = theme.current_experiment || {}; %>
+  <aside class="experiment-panel" aria-label="当前实验">
+    <div class="experiment-top">
+      <span class="status-dot"></span>
+      <span class="mono-label"><%= exp.label || 'CURRENT EXPERIMENT' %></span>
+      <span class="status-badge"><%= exp.status || 'ACTIVE' %></span>
+    </div>
+    <div class="experiment-main">
+      <span class="experiment-state"><%= exp.status_text || '进行中' %></span>
+      <h2><%= exp.title || '当前项目' %></h2>
+      <p><%= exp.summary || '' %></p>
+    </div>
+    <div class="experiment-progress">
+      <div><span><%= exp.progress_label || '当前进度' %></span><strong><%= Math.max(0, Math.min(100, Number(exp.progress) || 0)) %>%</strong></div>
+      <span class="progress-track"><span style="width:<%= Math.max(0, Math.min(100, Number(exp.progress) || 0)) %>%"></span></span>
+    </div>
+    <div class="experiment-grid">
+      <div><span><%= exp.latest_label || '最新进展' %></span><strong><%= exp.latest || '持续推进' %></strong></div>
+      <div><span><%= exp.next_label || '下一步' %></span><strong><%= exp.next || '继续完善' %></strong></div>
+    </div>
+    <% if (exp.updated) { %><p class="experiment-updated">UPDATED <%= exp.updated %></p><% } %>
+  </aside>
+</section>
+
+<section class="home-section home-shell" id="projects">
+  <header class="section-head">
+    <div><p class="eyebrow">FEATURED WORK</p><h2>精选项目</h2></div>
+    <a href="<%- url_for('/#logs') %>">查看开发日志 <span aria-hidden="true">→</span></a>
+  </header>
+  <% var featured = theme.featured_project || {}; %>
+  <article class="featured-project">
+    <div class="featured-copy">
+      <span class="project-status"><span class="status-dot"></span><%= featured.status || '持续开发' %></span>
+      <h3><%= featured.title || '手机每日任务 Agent' %></h3>
+      <p><%= featured.description || '' %></p>
+      <% if (featured.tags && featured.tags.length) { %><div class="tag-row"><% featured.tags.forEach(function(tag) { %><span class="chip"><%= tag %></span><% }); %></div><% } %>
+      <div class="project-links">
+        <% if (featured.primary_link) { %><a href="<%= featured.primary_link %>"<% if (/^https?:/.test(featured.primary_link)) { %> target="_blank" rel="noopener"<% } %>><%= featured.primary_label || '查看项目' %> <span aria-hidden="true">↗</span></a><% } %>
+        <% if (featured.log_link) { %><a href="<%- url_for(featured.log_link) %>"><%= featured.log_label || '开发日志' %> <span aria-hidden="true">→</span></a><% } %>
+      </div>
+    </div>
+    <div class="project-visual" aria-hidden="true">
+      <div class="flow-row"><span>SCHEDULE</span><i>→</i><span>AGENT</span><i>→</i><span>PHONE</span></div>
+      <div class="phone-frame">
+        <i></i><span></span><span></span><b></b>
+      </div>
+      <div class="signal signal-one"></div><div class="signal signal-two"></div>
+    </div>
+  </article>
+  <% if (theme.projects && theme.projects.length) { %>
+  <div class="project-grid">
+    <% theme.projects.forEach(function(project) { %>
+    <a class="project-card" href="<%- /^https?:/.test(project.link || '') ? project.link : url_for(project.link || '/') %>"<% if (/^https?:/.test(project.link || '')) { %> target="_blank" rel="noopener"<% } %>>
+      <div class="project-card-top"><span class="chip"><%= project.type || 'Project' %></span><span class="project-card-state"><%= project.status || '进行中' %></span></div>
+      <h3><%= project.title %></h3>
+      <p><%= project.description || '' %></p>
+      <span class="text-link">查看详情 <span aria-hidden="true">→</span></span>
+    </a>
+    <% }); %>
+  </div>
+  <% } %>
 </section>
 <% } %>
 
-<section class="wrap" id="recent">
-  <h2 class="sec-title">最近文章</h2>
+<section class="home-section home-shell logs-section" id="logs">
+  <header class="section-head">
+    <div><p class="eyebrow">RECENT LOGS</p><h2><%= firstPage ? '最近实验' : '更多日志' %></h2></div>
+    <% if (firstPage) { %><span class="log-count"><%= date(new Date(), 'YYYY') %> / <%= site.posts.length %> LOGS</span><% } %>
+  </header>
   <% if (page.posts.length) { %>
-  <% page.posts.each(function(post){ %>
-  <article class="card">
-    <h3 class="card-title"><a href="<%- url_for(post.path) %>"><%= post.title %></a></h3>
-    <%
-      var exc = strip_html(post.excerpt || post.content).replace(/^[\s\r\n]+/, '').substring(0, 120);
-    %>
-    <p class="card-excerpt"><%= exc %><% if (exc.length >= 120) { %>…<% } %></p>
-    <div class="card-meta">
-      <span class="card-tags">
-        <% if (post.tags && post.tags.length) { post.tags.each(function(tag){ %>
-        <a class="chip" href="<%- url_for(tag.path) %>"><%= tag.name %></a>
-        <% }); } %>
-      </span>
-      <a class="card-more" href="<%- url_for(post.path) %>">阅读全文 →</a>
-      <time class="card-date"><%= date(post.date, 'YYYY-MM-DD') %></time>
-    </div>
-  </article>
-  <% }); %>
+  <div class="log-list">
+    <% page.posts.each(function(post) { %>
+    <% var exc = strip_html(post.excerpt || post.content).replace(/^\s+/, '').replace(/\s+/g, ' ').substring(0, 100); %>
+    <article class="log-item">
+      <time datetime="<%= date(post.date, 'YYYY-MM-DD') %>"><span><%= date(post.date, 'MM.DD') %></span><%= date(post.date, 'YYYY') %></time>
+      <div class="log-body">
+        <h3><a href="<%- url_for(post.path) %>"><%= post.title %></a></h3>
+        <p><%= exc %><% if (exc.length >= 100) { %>…<% } %></p>
+        <% if (post.tags && post.tags.length) { %><div class="tag-row"><% post.tags.each(function(tag) { %><a class="chip" href="<%- url_for(tag.path) %>"><%= tag.name %></a><% }); %></div><% } %>
+      </div>
+      <a class="log-arrow" href="<%- url_for(post.path) %>" aria-label="阅读《<%= post.title %>》">→</a>
+    </article>
+    <% }); %>
+  </div>
+  <div class="logs-footer">
+    <span>按年份、主题或项目继续探索</span>
+    <a href="<%- url_for('/archives/') %>">查看全部日志 <span aria-hidden="true">→</span></a>
+  </div>
   <%- paginator({ prev_text: '上一页', next_text: '下一页', mid_size: 1 }) %>
-  <% } else { %>
-  <p class="empty">还没有文章，去写第一篇吧。</p>
-  <% } %>
+  <% } else { %><p class="empty">实验台暂时是空的，先去写一篇记录吧。</p><% } %>
 </section>
+
+<% if (firstPage && (site.tags.length || site.categories.length)) { %>
+<section class="home-section home-shell explore-section">
+  <header class="section-head"><div><p class="eyebrow">EXPLORE</p><h2>探索主题</h2></div></header>
+  <div class="explore-grid">
+    <% site.categories.sort('name').each(function(category) { %><a href="<%- url_for(category.path) %>"><span>分类</span><strong><%= category.name %></strong><em><%= category.posts.length %> 篇</em></a><% }); %>
+    <% site.tags.toArray().sort(function(a, b) { return a.name.localeCompare(b.name); }).slice(0, 8).forEach(function(tag) { %><a href="<%- url_for(tag.path) %>"><span>标签</span><strong><%= tag.name %></strong><em><%= tag.posts.length %> 篇</em></a><% }); %>
+  </div>
+</section>
+<% } %>

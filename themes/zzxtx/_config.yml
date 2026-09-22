@@ -2,31 +2,73 @@
 
 menu:
   首页: /
+  项目: /#projects
+  日志: /#logs
   归档: /archives
-  分类: /categories
-  标签: /tags
   关于: /about
 
-# 首页 Hero 大屏
 hero:
-  greeting: "Hi, I'm"
-  name: zzxtx
-  bio: 一个正在学习编程的大学生 · 记录学习笔记、项目实践与踩坑
-  stack: Data Science · AI · Coding
-  main_btn: 查看文章
-  main_btn_link: "#recent"
+  eyebrow: "PERSONAL LAB · LEARNING IN PUBLIC"
+  title_line_1: 边学边做，
+  title_line_2: 把折腾变成作品。
+  bio: 记录自动化、AI、数据与代码实验。成功的留下方案，失败的留下原因。
+  main_btn: 查看实验
+  main_btn_link: "#logs"
   github_btn: GitHub
   github_link: https://github.com/zzxtx
 
-# 页脚社交链接
+current_experiment:
+  label: CURRENT EXPERIMENT
+  status: ACTIVE
+  status_text: 持续开发
+  title: 手机每日任务 Agent
+  summary: 无线 ADB · 页面识别 · 自动签到
+  progress_label: 稳定性验证
+  progress: 68
+  latest_label: 最新进展
+  latest: 异常广告绕过
+  next_label: 下一步
+  next: 完善 Skill
+  updated: "2026.09.21"
+
+featured_project:
+  status: 持续开发
+  title: 手机每日任务 Agent
+  description: 通过无线 ADB 和视觉判断，让 Agent 自动完成签到、广告任务，并处理不断变化的异常页面。
+  tags:
+    - ADB
+    - Agent
+    - Automation
+  primary_label: 查看 GitHub
+  primary_link: https://github.com/zzxtx/daily-phone-tasks
+  log_label: 开发日志
+  log_link: /tags/个人记录/
+
+projects:
+  - title: 股票筛选工具
+    type: 数据工具
+    status: 可用
+    description: 从筛选脚本延伸到桌面端与 Android 端。
+    link: https://github.com/zzxtx/stock-screener
+  - title: 个人博客主题
+    type: Web
+    status: 进行中
+    description: 为实验日志与项目记录设计的 Hexo 自研主题。
+    link: /about/
+
 social:
   GitHub: https://github.com/zzxtx
 
 footer:
   since: 2025
+  motto: Built while learning.
   powered: true
 
-# 文章页目录
 toc:
   enable: true
   max_depth: 3
+
+search:
+  enable: true
+  shortcut: "/"
+  max_results: 8

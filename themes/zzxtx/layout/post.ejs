@@ -1,44 +1,37 @@
-<% var plain = strip_html(page.content).replace(/\s+/g, ''); var readMin = Math.max(1, Math.round(plain.length / 400)); %>
+<% var plain = strip_html(page.content).replace(/\s+/g, ''); %>
+<% var readMin = Math.max(1, Math.round(plain.length / 400)); %>
 <% var tocHtml = (theme.toc && theme.toc.enable !== false && page.toc !== false) ? toc(page.content, { class: 'toc', list_number: false, max_depth: (theme.toc && theme.toc.max_depth) || 3 }) : ''; %>
 <article class="post">
   <header class="post-header">
+    <p class="post-kicker"><a href="<%- url_for('/#logs') %>">实验日志</a><span>/</span><%= page.project || (page.categories && page.categories.length ? page.categories.toArray()[0].name : '个人记录') %></p>
     <h1 class="post-title"><%= page.title %></h1>
-    <div class="post-meta">
-      <time datetime="<%= date(page.date, 'YYYY-MM-DD') %>"><%= date(page.date, 'YYYY-MM-DD') %></time>
-      <% if (page.categories && page.categories.length) { %>
-      <span class="dot">·</span>
-      <% page.categories.each(function(cat){ %><a href="<%- url_for(cat.path) %>"><%= cat.name %></a><% }); %>
-      <% } %>
-      <span class="dot">·</span>
-      <span>约 <%= readMin %> 分钟</span>
+    <% if (page.description) { %><p class="post-lead"><%= page.description %></p><% } %>
+    <div class="note-meta-grid">
+      <div><span>发布</span><strong><time datetime="<%= date(page.date, 'YYYY-MM-DD') %>"><%= date(page.date, 'YYYY.MM.DD') %></time></strong></div>
+      <div><span>更新</span><strong><time datetime="<%= date(page.updated, 'YYYY-MM-DD') %>"><%= date(page.updated, 'YYYY.MM.DD') %></time></strong></div>
+      <div><span>阅读</span><strong>约 <%= readMin %> 分钟</strong></div>
+      <div><span>状态</span><strong class="note-status"><i></i><%= page.status || '已记录' %></strong></div>
     </div>
   </header>
-
   <div class="post-layout">
     <div class="article-entry" id="article-entry">
       <%- page.content %>
       <% if (page.tags && page.tags.length) { %>
-      <div class="post-tags">
-        <% page.tags.each(function(tag){ %>
-        <a class="chip" href="<%- url_for(tag.path) %>"># <%= tag.name %></a>
-        <% }); %>
-      </div>
+      <footer class="post-tags">
+        <span>相关主题</span>
+        <div><% page.tags.each(function(tag) { %><a class="chip" href="<%- url_for(tag.path) %>"># <%= tag.name %></a><% }); %></div>
+      </footer>
       <% } %>
     </div>
     <% if (tocHtml && tocHtml.replace(/<[^>]+>/g, '').trim().length > 0) { %>
     <aside class="post-toc" id="post-toc">
-      <p class="toc-title">目录</p>
+      <p class="toc-title">ON THIS PAGE</p>
       <%- tocHtml %>
     </aside>
     <% } %>
   </div>
-
-  <nav class="post-nav">
-    <% if (page.prev) { %>
-    <a class="post-nav-item" href="<%- url_for(page.prev.path) %>"><span class="post-nav-label">上一篇</span><span class="post-nav-title"><%= page.prev.title %></span></a>
-    <% } else { %><span class="post-nav-item"></span><% } %>
-    <% if (page.next) { %>
-    <a class="post-nav-item next" href="<%- url_for(page.next.path) %>"><span class="post-nav-label">下一篇</span><span class="post-nav-title"><%= page.next.title %></span></a>
-    <% } else { %><span class="post-nav-item"></span><% } %>
+  <nav class="post-nav" aria-label="相邻文章">
+    <% if (page.prev) { %><a class="post-nav-item" href="<%- url_for(page.prev.path) %>"><span class="post-nav-label">上一篇</span><span class="post-nav-title"><%= page.prev.title %></span></a><% } else { %><span></span><% } %>
+    <% if (page.next) { %><a class="post-nav-item next" href="<%- url_for(page.next.path) %>"><span class="post-nav-label">下一篇</span><span class="post-nav-title"><%= page.next.title %></span></a><% } else { %><span></span><% } %>
   </nav>
 </article>
