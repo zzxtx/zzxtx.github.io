@@ -12,6 +12,7 @@
 | `source/_posts/` | 你写的文章（Markdown） | 天天改的就是这里 |
 | `source/_drafts/` | 草稿，不会被发布 | 随便放 |
 | `_config.yml` | 博客总配置 | 偶尔改 |
+| `themes/zzxtx/_config.yml` | 首页各板块的文字、导航菜单、页脚 | 想改首页内容就改这里 |
 | `public/` | 编译产物 | 别手改，会被覆盖 |
 
 一句话：**你只写 `source/_posts/` 里的 Markdown，其他都是机器和你 git 的事。**
@@ -40,7 +41,7 @@ categories: 前端
 正文从这里开始……
 ```
 
-注意 `---` 必须**各占一行**，`date` 不能写成未来时间（否则首页不显示）。
+注意 `---` 必须**各占一行**。`date` 建议填真实时间——写成未来时间虽然也会显示（配置里 `future: true` 允许），但会排到列表最前面，容易把顺序搞乱。
 
 ## 三、本地预览（推荐，边写边看）
 
@@ -121,9 +122,10 @@ npx hexo server
 ## 十、出问题怎么办
 
 - **网页没更新**：`npx hexo clean` → `npx hexo generate` → 浏览器 `Ctrl + F5`
+- **改了首页文字没效果**：确认改的是 `themes\zzxtx\_config.yml`（当前主题的配置），而不是已失效的 `_config.landscape.yml`
 - **`hexo deploy` 报错**：先运行 `Test-Path D:\Blog\my-blog\.deploy_git\.git`，返回 `False` 就删掉整个 `.deploy_git` 文件夹再 deploy
 - **`git push` 连不上**：国内访问 GitHub 时常抽风，等几分钟重试；有代理软件时用 `git config --global http.proxy http://127.0.0.1:7890`（端口按实际改），推完 `git config --global --unset http.proxy`
-- **文章不显示**：检查 front-matter 的两个 `---` 是否各占一行、`date` 是否写成未来时间
+- **文章不显示**：检查 front-matter 的两个 `---` 是否各占一行、`date` 的格式是否是 `2026-09-22 20:00:00` 这样
 - **网站打不开（404）**：仓库 Settings → Pages，确认 Source 是 `Deploy from a branch` + 分支 `main` + 目录 `/ (root)`
 - **想换主题**：把主题 `git clone` 到 `themes/` 文件夹，改 `_config.yml` 里的 `theme:`，再走一遍 clean/generate/deploy
 

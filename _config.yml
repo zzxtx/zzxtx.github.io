@@ -104,5 +104,5 @@ deploy:
   type: git
   repo: https://github.com/zzxtx/zzxtx.github.io
   branch: main
-  message: "部署：{{ now('YYYY-MM-DD HH:mm') }}"
+  message: "部署：{{ now('yyyy-MM-dd HH:mm') }}"
  # 这里是可选的提交信息，不写也可以
