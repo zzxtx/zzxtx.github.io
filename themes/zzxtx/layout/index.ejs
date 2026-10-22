@@ -1,84 +1,13 @@
 <% var firstPage = !page.current || page.current === 1; %>
-<% if (firstPage) { %>
-<section class="hero home-shell">
-  <div class="hero-copy">
-    <p class="eyebrow"><%= (theme.hero && theme.hero.eyebrow) || 'PERSONAL LAB' %></p>
-    <h1 class="hero-title"><%= (theme.hero && theme.hero.title_line_1) || '边学边做，' %><br><span><%= (theme.hero && theme.hero.title_line_2) || '把折腾变成作品。' %></span></h1>
-    <p class="hero-bio"><%= (theme.hero && theme.hero.bio) || config.description %></p>
-    <div class="hero-actions">
-      <a class="btn btn-solid" href="<%- url_for((theme.hero && theme.hero.main_btn_link) || '#logs') %>"><%= (theme.hero && theme.hero.main_btn) || '查看实验' %><span aria-hidden="true">→</span></a>
-      <% if (theme.hero && theme.hero.github_link) { %><a class="btn" href="<%= theme.hero.github_link %>" target="_blank" rel="noopener"><%= theme.hero.github_btn || 'GitHub' %><span aria-hidden="true">↗</span></a><% } %>
-    </div>
-    <p class="hero-footnote"><span class="pulse-dot"></span><%= site.posts.length %> 篇公开记录，仍在持续更新</p>
-  </div>
-  <% var exp = theme.current_experiment || {}; %>
-  <aside class="experiment-panel" aria-label="当前实验">
-    <div class="experiment-top">
-      <span class="status-dot"></span>
-      <span class="mono-label"><%= exp.label || 'CURRENT EXPERIMENT' %></span>
-      <span class="status-badge"><%= exp.status || 'ACTIVE' %></span>
-    </div>
-    <div class="experiment-main">
-      <span class="experiment-state"><%= exp.status_text || '进行中' %></span>
-      <h2><%= exp.title || '当前项目' %></h2>
-      <p><%= exp.summary || '' %></p>
-    </div>
-    <div class="experiment-progress">
-      <div><span><%= exp.progress_label || '当前进度' %></span><strong><%= Math.max(0, Math.min(100, Number(exp.progress) || 0)) %>%</strong></div>
-      <span class="progress-track"><span style="width:<%= Math.max(0, Math.min(100, Number(exp.progress) || 0)) %>%"></span></span>
-    </div>
-    <div class="experiment-grid">
-      <div><span><%= exp.latest_label || '最新进展' %></span><strong><%= exp.latest || '持续推进' %></strong></div>
-      <div><span><%= exp.next_label || '下一步' %></span><strong><%= exp.next || '继续完善' %></strong></div>
-    </div>
-    <% if (exp.updated) { %><p class="experiment-updated">UPDATED <%= exp.updated %></p><% } %>
-  </aside>
-</section>
-
-<section class="home-section home-shell" id="projects">
-  <header class="section-head">
-    <div><p class="eyebrow">FEATURED WORK</p><h2>精选项目</h2></div>
-    <a href="<%- url_for('/#logs') %>">查看开发日志 <span aria-hidden="true">→</span></a>
-  </header>
-  <% var featured = theme.featured_project || {}; %>
-  <article class="featured-project">
-    <div class="featured-copy">
-      <span class="project-status"><span class="status-dot"></span><%= featured.status || '持续开发' %></span>
-      <h3><%= featured.title || '手机每日任务 Agent' %></h3>
-      <p><%= featured.description || '' %></p>
-      <% if (featured.tags && featured.tags.length) { %><div class="tag-row"><% featured.tags.forEach(function(tag) { %><span class="chip"><%= tag %></span><% }); %></div><% } %>
-      <div class="project-links">
-        <% if (featured.primary_link) { %><a href="<%= featured.primary_link %>"<% if (/^https?:/.test(featured.primary_link)) { %> target="_blank" rel="noopener"<% } %>><%= featured.primary_label || '查看项目' %> <span aria-hidden="true">↗</span></a><% } %>
-        <% if (featured.log_link) { %><a href="<%- url_for(featured.log_link) %>"><%= featured.log_label || '开发日志' %> <span aria-hidden="true">→</span></a><% } %>
-      </div>
-    </div>
-    <div class="project-visual" aria-hidden="true">
-      <div class="flow-row"><span>SCHEDULE</span><i>→</i><span>AGENT</span><i>→</i><span>PHONE</span></div>
-      <div class="phone-frame">
-        <i></i><span></span><span></span><b></b>
-      </div>
-      <div class="signal signal-one"></div><div class="signal signal-two"></div>
-    </div>
-  </article>
-  <% if (theme.projects && theme.projects.length) { %>
-  <div class="project-grid">
-    <% theme.projects.forEach(function(project) { %>
-    <a class="project-card" href="<%- /^https?:/.test(project.link || '') ? project.link : url_for(project.link || '/') %>"<% if (/^https?:/.test(project.link || '')) { %> target="_blank" rel="noopener"<% } %>>
-      <div class="project-card-top"><span class="chip"><%= project.type || 'Project' %></span><span class="project-card-state"><%= project.status || '进行中' %></span></div>
-      <h3><%= project.title %></h3>
-      <p><%= project.description || '' %></p>
-      <span class="text-link">查看详情 <span aria-hidden="true">→</span></span>
-    </a>
-    <% }); %>
-  </div>
-  <% } %>
-</section>
-<% } %>
+<%# 首页改版：hero 与「精选项目」板块已移除，首页只保留欢迎语 + 文章列表 %>
 
 <section class="home-section home-shell logs-section" id="logs">
+  <% if (firstPage) { %>
+  <p class="welcome-line"><%= (theme.welcome && theme.welcome.text) || config.description %></p>
+  <% } %>
   <header class="section-head">
-    <div><p class="eyebrow">RECENT LOGS</p><h2><%= firstPage ? '最近实验' : '更多日志' %></h2></div>
-    <% if (firstPage) { %><span class="log-count"><%= date(new Date(), 'YYYY') %> / <%= site.posts.length %> LOGS</span><% } %>
+    <div><p class="eyebrow">RECENT POSTS</p><h2><%= firstPage ? '最近博客' : '更多文章' %></h2></div>
+    <% if (firstPage) { %><span class="log-count"><%= date(new Date(), 'YYYY') %> / <%= site.posts.length %> 篇</span><% } %>
   </header>
   <% if (page.posts.length) { %>
   <div class="log-list">
