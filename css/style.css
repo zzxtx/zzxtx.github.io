@@ -164,6 +164,7 @@ img { max-width: 100%; }
 .project-card .text-link { margin-top: auto; padding-top: 18px; }
 
 .logs-section { padding-bottom: 40px; }
+.welcome-line { max-width: 680px; margin: 0 0 34px; color: var(--text-muted); font-size: clamp(17px, 1.7vw, 20px); line-height: 1.75; }
 .log-count { margin-left: auto; padding: 5px 9px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font: 600 11px/1.4 var(--font-mono); }
 .log-list { border-top: .5px solid var(--border); }
 .log-item { position: relative; display: grid; grid-template-columns: 84px minmax(0, 1fr) 24px; gap: 18px; padding: 24px 0; border-bottom: .5px solid var(--border); }
